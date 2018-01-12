@@ -26,6 +26,12 @@ class ApplicationController < Sinatra::Base
     erb :'/users/create_user'
   end
 
+  get '/users/show' do
+    @user = User.find_by_id(session[:user_id])
+    @dogs = Dog.all
+    erb :'/users/show'
+  end
+
   get '/newdog' do
     erb :'/dogs/create_dog'
   end

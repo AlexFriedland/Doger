@@ -1,8 +1,8 @@
-<h2>Welcome back, <%=@user.name%>!</h2>
+<h2>Welcome back, <%=@user.username%>!</h2>
 <h3>Your Dogs:</h3>
 <ul>
 <%@dogs.each do |dog|%>
-  <li><%=dog.name%><a href="/dogs/<%=dog.id%>"></a></li>
+  <li><a href="/dogs/<%=dog.id%>"><%=dog.name%></a></li>
 <%end%>
 </ul>
 
