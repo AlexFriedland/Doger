@@ -21,14 +21,14 @@ class ApplicationController < Sinatra::Base
     if logged_in?
       redirect to "/"
     end
-    erb :
+    #erb :
   end
 
   get "/login" do
     if logged_in?
       redirect to "/"
     end
-    erb :
+    #erb :
   end
 
   get "/logout" do
