@@ -1,3 +1,7 @@
+puts "** Seeding Database: seeding...    **"
+Time.new
+sleep(2)
+
 x = User.create(username: "alex", email: "a@alex.com", password: "a")
 
 x.dogs << Dog.create(name: "Jay", user_id: "#{x.id}")
