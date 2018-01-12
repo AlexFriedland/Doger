@@ -19,7 +19,7 @@ class ApplicationController < Sinatra::Base
 
   get "/signup" do
     if logged_in?
-      redirect to "/"
+      redirect to "/walks"
     end
     #erb :
   end
