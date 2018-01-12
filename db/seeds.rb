@@ -19,11 +19,4 @@ Dog.all.each do |dog|
   x.dogs << dog
 end
 
-=begin
-t.datetime "day"
-t.string "from"
-t.string "to"
-t.decimal "miles"
-t.integer "dog_id"
-t.integer "user_id"
-=end
+puts "finishing"
