@@ -1,4 +1,7 @@
 class Walk < ActiveRecord::Base
-  has_many :dogs
+  belongs_to :dog
   belongs_to :user
+
+  include Slugifiable::Instance
+  extend Slugifiable::Class
 end
