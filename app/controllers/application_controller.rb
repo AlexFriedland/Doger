@@ -1,6 +1,7 @@
 require './config/environment'
 require "./app/models/user"
 require "./app/models/walk"
+require "./app/models/dog"
 
 require 'pry'
 
@@ -27,9 +28,9 @@ class ApplicationController < Sinatra::Base
 
   get "/login" do
     if logged_in?
-      redirect to "/"
+      redirect to "/users/show"
     end
-    #erb :
+    erb :'/users/login'
   end
 
   get "/logout" do
