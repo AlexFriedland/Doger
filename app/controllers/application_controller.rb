@@ -19,9 +19,10 @@ class ApplicationController < Sinatra::Base
 
   get "/signup" do
     if logged_in?
-      redirect to "/walks"
+      @dogs = Dog.all
+      redirect to "/users/show"
     end
-    #erb :
+    erb :'/users/create_user'
   end
 
   get "/login" do
