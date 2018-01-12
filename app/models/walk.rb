@@ -1,4 +1,4 @@
 class Walk < ActiveRecord::Base
-  belongs_to :dog
+  has_many :dogs
   belongs_to :user
 end
