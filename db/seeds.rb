@@ -12,11 +12,11 @@ x = User.create(username: "harrison", email: "h@harrison.com", password: "h")
 x.dogs << Dog.create(name: "Sophie", user_id: "#{x.id}")
 x.dogs << Dog.create(name: "Mingie", user_id: "#{x.id}")
 
-x = Walk.create(day: "#{Time.now}", from: "house", to: "house", miles: "1.15")
+y = Walk.create(day: "#{Time.now}", from: "house", to: "house", miles: "1.15")
 
 Dog.all.each do |dog|
-  dog.walks << x
-  x.dogs << dog
+  dog.walks << y
+  y.dogs << dog
 end
 
-puts "finishing"
+puts "**  Finishing  **"
