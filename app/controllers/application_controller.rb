@@ -26,6 +26,10 @@ class ApplicationController < Sinatra::Base
     erb :'/users/create_user'
   end
 
+  get '/newdog' do
+    erb :'/dogs/create_dog'
+  end
+
   get "/login" do
     if logged_in?
       redirect to "/users/show"
@@ -102,7 +106,7 @@ class ApplicationController < Sinatra::Base
     @user = User.new(email: params["email"], username: params["username"], password_digest: params["password"])
     if @user.username != "" && @user.password != "" && @user.save
       session[:user_id] = @user.id
-      redirect "/walks"
+      redirect "/users/show"
     else
       redirect "/failure"
     end
