@@ -1,7 +1,10 @@
 <h1>Your Walks:</h1>
 
-<%if @user.walk.empty?%>
-  You have no walks.
+<%@user.walks.each do |walk|%>
+  <%walk.dogs.each do |dog|%>
+    <%=dog.name%>
+  <%end%>
+  <%=walk.miles.to_f%>
 <%end%>
 
 <% %>
