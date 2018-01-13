@@ -1,3 +1,5 @@
+#walks belong to dogs
+
 require './config/environment'
 require "./app/models/user"
 require "./app/models/walk"
@@ -28,6 +30,8 @@ class ApplicationController < Sinatra::Base
 
   get "/users/show" do
     @user = User.find_by_id(session[:user_id])
+    @walks = @user.walks
+    binding.pry
     erb :'/users/show'
   end
 
@@ -96,7 +100,7 @@ class ApplicationController < Sinatra::Base
 
   get "/walks" do
     if logged_in?
-      @walk = current_user
+      @user = User.find_by_id(session[:user_id])
       erb :'walks/walks'
     else
       redirect to "/login"

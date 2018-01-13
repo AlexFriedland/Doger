@@ -1,9 +1,7 @@
 <h1>Your Walks:</h1>
 
 <%@user.walks.each do |walk|%>
-  <%walk.dogs.each do |dog|%>
-    <%=dog.name%>
-  <%end%>
+  <%=walk.dogs%>
   <%=walk.miles.to_f%>
 <%end%>
 
