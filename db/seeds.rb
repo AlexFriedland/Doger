@@ -19,4 +19,4 @@ Dog.all.each do |dog|
   y.dogs << dog
 end
 
-puts "**  Finishing  **"
+puts "**  Complete  **"

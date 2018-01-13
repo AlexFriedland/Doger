@@ -20,19 +20,18 @@ class ApplicationController < Sinatra::Base
 
   get "/signup" do
     if logged_in?
-      @dogs = Dog.all
+      @user = User.find_by_id(params[:user_id])
       redirect to "/users/show"
     end
     erb :'/users/create_user'
   end
 
-  get '/users/show' do
+  get "/users/show" do
     @user = User.find_by_id(session[:user_id])
-    @dogs = Dog.all
     erb :'/users/show'
   end
 
-  get '/newdog' do
+  get "/newdog" do
     erb :'/dogs/create_dog'
   end
 
@@ -104,7 +103,7 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  get "/failure" do
+  get '/failure' do
     erb :'/failure'
   end
 
@@ -120,7 +119,7 @@ class ApplicationController < Sinatra::Base
 
   post "/login" do
     @user = User.find_by(:username => params[:username])
-    if @user && @user.authenticate(params[:password_digest])
+    if @user && @user.authenticate(params[:password])
         session[:user_id] = @user.id
         redirect "/walks"
     else
