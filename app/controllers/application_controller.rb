@@ -30,7 +30,6 @@ class ApplicationController < Sinatra::Base
 
   get "/users/show" do
     @user = User.find_by_id(session[:user_id])
-    binding.pry
     erb :'/users/show'
   end
 

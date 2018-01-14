@@ -1,4 +1,4 @@
-#=begin
+=begin
   puts "** Seeding Database: seeding...    **"
   Time.new
   sleep(2)
@@ -17,15 +17,16 @@
   walk1 = Walk.create(day: "#{Time.now}", from: "x location", to: "y locale", miles: "666")
 
   Dog.all.each do |dog|
-    dog.walks << walk1; dog.walks << walk2
+    dog.walks << walk1
+    dog.walks << walk2
     walk1.dogs << dog
     walk2.dogs << dog
   end
 
   puts "**  Complete  **"
-#=end
+=end
 
-=begin
+#=begin
   puts "***destroying***"
 
   Dog.all.each do |dog|
@@ -41,4 +42,4 @@
   end
 
   puts "*** done ***"
-=end
+#=end
