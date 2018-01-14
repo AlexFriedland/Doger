@@ -1,8 +1,8 @@
 <h1>Your Walks:</h1>
 
-<%@user.walks.each do |walk|%>
-  <%=walk.dogs%>
-  <%=walk.miles.to_f%>
+<%@user.dogs.each do |dog|%>
+  <%=dog.walks%>
+  <%=dog.walks.miles.to_f%>
 <%end%>
 
 <% %>
