@@ -96,7 +96,7 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  get "/walks" do
+  get "/walks/walks" do
     if logged_in?
       @user = User.find_by_id(session[:user_id])
       erb :'walks/walks'
