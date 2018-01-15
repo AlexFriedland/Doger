@@ -1,26 +1,20 @@
 <h1>Your Walks:</h1>
 
+
 <%@user.dogs.each do |dog|%>
 
   <%=dog.name%>
-  <ul>
-    <%dog.walk.each do |walk|%>
-      <%=walk.miles.to_f%>
-      <%= walk.day %>
-      <%= walk.from %>
-      <%= walk.to %>
-      <br>
-    <%end%>
-  </ul>
-  <ul>
-    <%dog.walks.each do |walk|%>
-      <%=walk.miles.to_f%>
-      <%= walk.day %>
-      <%= walk.from %>
-      <%= walk.to %>
-      <br>
-    <%end%>
-  </ul>
-<%end%>
+    <%if dog.walks.empty? %>
+      <p>No walks detected!</p>
+    <% end %>
 
-<%= @user.dogs %>
+    <%dog.walks.each do |walk|%>
+      <div>
+        Distance: <%=walk.miles.to_f%>
+        Date: <%= walk.day %>
+        From: <%= walk.from %>
+        To: <%= walk.to %>
+        <br>
+      </div>
+    <%end%>
+<%end%>

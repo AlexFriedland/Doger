@@ -33,7 +33,7 @@ class ApplicationController < Sinatra::Base
     erb :'/users/show'
   end
 
-  get "/newdog" do
+  get "/dogs/newdog" do
     erb :'/dogs/create_dog'
   end
 
@@ -89,17 +89,17 @@ class ApplicationController < Sinatra::Base
 
   get "/walks/:id" do
     if logged_in?
-      @walk = Walk.find(params[:id])
+      @walk = Walk.find_by_id(params[:id])
       erb :'/walks/show_walk'
     else
       redirect to "/login"
     end
   end
 
-  get "/walks/walks" do
+  get "/walks" do
     if logged_in?
       @user = User.find_by_id(session[:user_id])
-      erb :'walks/walks'
+      erb :'/walks/walks'
     else
       redirect to "/login"
     end
@@ -119,31 +119,29 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  get "/show" do
+      @user = User.find_by_id(session[:user_id])
+      erb :"/users/show"
+  end
+
   post "/login" do
     @user = User.find_by(:username => params[:username])
     if @user && @user.authenticate(params[:password])
         session[:user_id] = @user.id
-        redirect "/walks"
+        redirect "/show"
     else
         redirect "/failure"
     end
   end
 
-  post "/rides" do
-    if logged_in? && complete_ride?
-      @ride = Ride.create(
-        from_location: params["from_location"],
-        to_location: params["to_location"],
-        miles: params["miles"],
-        day: params["day"],
-        user_id: session[:user_id]
-      )
-      params["feelings"].each do |feeling|
-        @ride.feelings << Feeling.create(feeling_description: feeling)
-      end
-      redirect to "/rides"
+
+
+  post "/newdog" do
+    if logged_in? && complete_dog?
+      @dog = Dog.create(name: params["name"])
+      redirect to "/show"
     else
-      redirect to "/rides/new"
+      redirect to "/dogs/newdog
     end
   end
 
@@ -171,6 +169,10 @@ class ApplicationController < Sinatra::Base
       params["to_location"] != "" &&
       params["miles"] != "" &&
       params["day"] != ""
+    end
+
+    def complete_dog?
+      params["name"] != ""
     end
   end
 

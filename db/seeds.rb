@@ -28,17 +28,11 @@
 =begin
   puts "***destroying***"
 
-  Dog.all.each do |dog|
-    dog.destroy
-  end
+  Dog.destroy_all
 
-  Walk.all.each do |walk|
-    walk.destroy
-  end
+  Walk.destroy_all
 
-  User.all.each do |user|
-    user.destroy
-  end
+  User.destroy_all
 #
   puts "*** done ***"
 =end
