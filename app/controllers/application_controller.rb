@@ -90,10 +90,6 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  get '/create_dog' do
-    erb :'/dogs/create_dog'
-  end
-
   get "/walks/new" do
     if logged_in?
       erb :'/walks/create_walk'
@@ -149,11 +145,16 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-
+  get '/create_dog' do
+    erb :'/dogs/create_dog'
+  end
 
   post "/newdog" do
+    binding.pry
     if logged_in? && complete_dog?
       @dog = Dog.create(name: params["name"])
+      @user = User.find_by_id(session[:user_id])
+      @user.dogs << @dog
       redirect to "/show"
     else
       redirect to "/dogs/newdog"
@@ -190,5 +191,4 @@ class ApplicationController < Sinatra::Base
       params["name"] != ""
     end
   end
-
 end
