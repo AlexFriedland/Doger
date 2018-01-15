@@ -5,12 +5,20 @@
   <input type="text" name="name">
 </form>
 
-<label><h4>Walks</h4></label>
+<label><h4>Add your new dog to existing walks:</h4></label>
   <% Walk.all.each do |walk| %>
-    <label><%= walk.miles.to_f %></label>
+    <label><%= walk.miles.to_f %> miles, on: <%= walk.day %></label>
     <input type="checkbox" id="walk_<%=walk.id%>" name="dog[walk_ids][]" value="<%= walk.id %>"><br>
 
   <% end %>
+
+<label><h4>Or, create a new walk:</h4></label>
+ <label>Name:</label>
+  <input type="text" id="new_landmark" name="landmark[name]">
+  <label>Year:</label>
+  <input type="text" name="landmark[year_completed]">
+  <input type="submit" value="Create New Figure">
+</form>
 
 <br></br>
 <input type="submit" value="submit" name="submit">
