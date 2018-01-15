@@ -141,7 +141,7 @@ class ApplicationController < Sinatra::Base
       @dog = Dog.create(name: params["name"])
       redirect to "/show"
     else
-      redirect to "/dogs/newdog
+      redirect to "/dogs/newdog"
     end
   end
 
