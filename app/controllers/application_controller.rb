@@ -79,6 +79,21 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  patch '/dogs/:id' do
+    @dog = Dog.find_by_id(params[:id])
+    if params[:content] != ""
+      @tweet.content = params["content"]
+      @tweet.save
+      redirect to "/tweets/#{@tweet.id}"
+    else
+      redirect to "/tweets/#{@tweet.id}/edit"
+    end
+  end
+
+  get '/create_dog' do
+    erb :'/dogs/create_dog'
+  end
+
   get "/walks/new" do
     if logged_in?
       erb :'/walks/create_walk'
