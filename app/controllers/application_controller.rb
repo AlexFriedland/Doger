@@ -150,11 +150,21 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/newdog" do
-    binding.pry
     if logged_in? && complete_dog?
       @dog = Dog.create(name: params["name"])
       @user = User.find_by_id(session[:user_id])
       @user.dogs << @dog
+
+      if params[:dog]
+        @dog.walk_ids = params[:dog][:walk_ids]
+      end
+
+      if params[:walk]
+        @walk = Walk.create(day: "#{Time.now}", from: params[:walk][:from], to: params[:walk][:to], miles: params[:walk][:miles])
+        @dog.walks << @walk
+      end
+      binding.pry
+
       redirect to "/show"
     else
       redirect to "/dogs/newdog"
