@@ -1,5 +1,12 @@
 <h1><%=@dog.name%></h1>
 
+  <h2>Walks</h2>
+
+  <%@dog.walks.each do |walk| %>
+    <label><%= walk.miles.to_f %> miles, on: <%= walk.day %>, FROM: <%= walk.from %>, TO: <%= walk.to %></label>
+    <br>
+  <%end %>
+
 
   <h2>Edit Dog</h2>
     <form action="/dogs/<%= @dog.id %>" method="POST">
