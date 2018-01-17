@@ -1,0 +1,25 @@
+<h2>Walk:</h2>
+
+<div>
+  Distance: <%= @walk.miles.to_f %> miles<br>
+  Date: <%= @walk.day %><br>
+  To: <%= @walk.to %><br>
+  From: <%= @walk.from %><br>
+</div>
+
+<br>
+<br>
+
+<form action="/walks/<%=@walk.id%>" method="post">
+  <input type="hidden" name="_method" value="patch">
+
+  <% @walk.dogs.each do |dog| %>
+    <br>
+    <label>
+      <input type="checkbox" id="dog_<%=dog.id%>" name="dog[:name]" value="<%=dog.id%>">
+      <a href="/dogs/<%=dog.id%>"><%=dog.name%></a>
+    </label>
+  <% end %>
+  <br><br>
+  <input type="submit" value="Remove Dog">
+</form>

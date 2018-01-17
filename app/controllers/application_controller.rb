@@ -17,7 +17,10 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-  	  erb :index
+    if logged_in?
+      redirect to "/users/show"
+    end
+  	erb :index
   end
 
   get "/signup" do
@@ -106,6 +109,7 @@ class ApplicationController < Sinatra::Base
   get "/walks" do
     if logged_in?
       @user = User.find_by_id(session[:user_id])
+      @dogs = @user.dogs
       erb :'/walks/walks'
     else
       redirect to "/login"
