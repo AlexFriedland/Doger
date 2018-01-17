@@ -50,14 +50,16 @@ class ApplicationController < Sinatra::Base
       @dog.name = params[:dog][:name]
       @dog.save
 
-      redirect to "/dogs/#{@dog.id}"
+      redirect to "/users/show"
     else
-      redirect to "/dogs/#{@dog.id}"
+      redirect to "/users/show"
     end
   end
 
   delete '/dogs/:id' do
     @dog = Dog.find_by_id(params[:id])
+    @dog.delete
+    erb :'/users/show'
   end
 
 
@@ -164,15 +166,6 @@ class ApplicationController < Sinatra::Base
       redirect to "/dogs/newdog"
     end
   end
-
-  delete "/rides/:id/delete" do
-    @ride = Ride.find(params[:id])
-    if current_user.id == @ride.user_id
-      @ride.delete
-    end
-    redirect to "/rides"
-  end
-
 
   # Helper Methods
   helpers do
