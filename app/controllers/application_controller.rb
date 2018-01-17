@@ -56,7 +56,7 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  delete '/dogs/:id' do
+  delete '/dogs/:id/delete' do
     @dog = Dog.find_by_id(params[:id])
     @dog.delete
     erb :'/users/show'
@@ -146,6 +146,7 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/newdog" do
+    binding.pry
     if logged_in? && complete_dog?
       @dog = Dog.create(name: params["name"])
       @user = User.find_by_id(session[:user_id])
@@ -156,11 +157,9 @@ class ApplicationController < Sinatra::Base
       end
 
       if params[:walk]
-        @walk = Walk.create(day: "#{Time.now}", from: params[:walk][:from], to: params[:walk][:to], miles: params[:walk][:miles])
+        @walk = Walk.create(day: "#{Time.now}", from: params[:walk][:from], to: params[:walk][:to], miles: params[:walk][:distance])
         @dog.walks << @walk
       end
-      binding.pry
-
       redirect to "/show"
     else
       redirect to "/dogs/newdog"
