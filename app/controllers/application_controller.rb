@@ -60,33 +60,15 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  patch "/walks/:id" do
-    @walk = Walk.find_by_id(params[:id])
-    if complete_ride?
-      @walk.from_location = params["from_location"]
-      @walk.to_location = params["to_location"]
-      @walk.miles = params["miles"]
-      @walk.day = params["day"]
-      @walk.save
-
-      @walk.feelings.each_with_index do |feeling, i|
-        feeling.update(feeling_description: params["feelings"][i])
-      end
+  patch "/dogs/dog/:id" do
+    @dog = Dog.find_by_id(params[:id])
+    if complete_form?
+      @dog.name = params[:name]
+      @dog.save
 
       redirect to "/walks/#{@walks.id}"
     else
       redirect to "/walks/#{@walk.id}/edit"
-    end
-  end
-
-  patch '/dogs/:id' do
-    @dog = Dog.find_by_id(params[:id])
-    if params[:content] != ""
-      @tweet.content = params["content"]
-      @tweet.save
-      redirect to "/tweets/#{@tweet.id}"
-    else
-      redirect to "/tweets/#{@tweet.id}/edit"
     end
   end
 
@@ -190,11 +172,8 @@ class ApplicationController < Sinatra::Base
       User.find(session[:user_id])
     end
 
-    def complete_ride?
-      params["from_location"] != "" &&
-      params["to_location"] != "" &&
-      params["miles"] != "" &&
-      params["day"] != ""
+    def complete_form?
+      !params.each.empty?
     end
 
     def complete_dog?
