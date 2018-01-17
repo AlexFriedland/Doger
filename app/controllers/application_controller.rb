@@ -121,13 +121,16 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/signup" do
-    @user = User.new(email: params["email"], username: params["username"], password_digest: params["password"])
-    if @user.username != "" && @user.password != "" && @user.save
-      session[:user_id] = @user.id
-      redirect "/users/show"
-    else
-      redirect "/failure"
+    binding.pry
+    if
     end
+      @user = User.new(email: params["email"], username: params["username"], password_digest: params["password"])
+      if @user.username != "" && @user.password != "" && @user.save
+        session[:user_id] = @user.id
+        redirect "/users/show"
+      else
+        redirect "/failure"
+      end
   end
 
   get "/show" do
@@ -162,8 +165,8 @@ class ApplicationController < Sinatra::Base
       if params[:walk]
         @walk = Walk.create(day: "#{Time.now}", from: params[:walk][:from], to: params[:walk][:to], miles: params[:walk][:distance])
         @dog.walks << @walk
+        @walk.dogs << @dog
       end
-      binding.pry
       redirect to "/show"
     else
       redirect to "/dogs/newdog"
