@@ -122,8 +122,6 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/signup" do
-    binding.pry
-
     if User.all.any? {|user| user.username == params["username"]}
       redirect "/failure"
     else
