@@ -151,7 +151,6 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/newdog" do
-    binding.pry
     if logged_in? && complete_dog?
       @dog = Dog.create(name: params["name"])
       @user = User.find_by_id(session[:user_id])
