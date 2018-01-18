@@ -48,7 +48,7 @@ class ApplicationController < Sinatra::Base
   #patch / post ?
   patch "/dogs/:id" do
     @dog = Dog.find_by_id(params[:id])
-    if complete_form?
+    if complete_dog?
       @dog.name = params[:dog][:name]
       @dog.walk_ids = params[:dog][:walk_ids]
       @dog.save
@@ -182,18 +182,8 @@ class ApplicationController < Sinatra::Base
       User.find(session[:user_id])
     end
 
-    def complete_form?
-      !params.empty?
-    end
-
     def complete_dog?
       params["name"] != ""
-    end
-
-    def complete_form?
-      params.each do |x|
-        !params[x].empty?
-      end
     end
   end
 end
