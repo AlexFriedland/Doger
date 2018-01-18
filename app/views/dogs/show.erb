@@ -8,20 +8,28 @@
   <%end %>
 
 
-  <h2>Edit Dog</h2>
+  <h2>Edit Information</h2>
     <form action="/dogs/<%= @dog.id %>" method="POST">
       <input type="hidden" name="_method" value="patch">
       <label>Name</label>
       <input type="text" id="dog_name" name="dog[name]" value="<%= @dog.name%>"><br></br>
-      </br>
-      <br>
 
+      <h4>Assigned Walks:</h4>
       <% Walk.all.each do |walk| %>
         <input type="checkbox" id="walk_<%=walk.id%>" name="dog[walk_ids][]" value="<%= walk.id %>"<%='checked' if @dog.walks.include?(walk) %>>
         <label><%= walk.miles.to_f %> miles, on: <%= walk.day %>, FROM: <%= walk.from %>, TO: <%= walk.to %></label>
         <br><br>
       <% end %>
 
+      <label><h4>Create a new walk for <%= @dog.name %>:</h4></label>
+       <label>Distance:</label>
+        <input type="text" id="new_walk" name="walk[distance]">
+        <label>Walked From:</label>
+        <input type="text" name="walk[from]">
+        <label>Walked To:</label>
+        <input type="text" name="walk[to]">
+        <br>
+        <br>
       <input type="submit" value="Edit Dog">
 
     </form>
