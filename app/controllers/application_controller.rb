@@ -122,6 +122,11 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/signup" do
+    binding.pry
+
+    if User.all.any? {|user| user.username == params["username"]}
+      redirect "/failure"
+    else
       @user = User.new(email: params["email"], username: params["username"], password_digest: params["password"])
       if @user.username != "" && @user.password != "" && @user.save
         session[:user_id] = @user.id
@@ -129,6 +134,7 @@ class ApplicationController < Sinatra::Base
       else
         redirect "/failure"
       end
+    end
   end
 
   get "/show" do
