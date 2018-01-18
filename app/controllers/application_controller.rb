@@ -51,6 +51,7 @@ class ApplicationController < Sinatra::Base
     @dog = Dog.find_by_id(params[:id])
     if complete_form?
       @dog.name = params[:dog][:name]
+      @dog.walk_ids = params[:dog][:walk_ids]
       @dog.save
 
       redirect to "/users/show"
@@ -121,9 +122,6 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/signup" do
-    binding.pry
-    if
-    end
       @user = User.new(email: params["email"], username: params["username"], password_digest: params["password"])
       if @user.username != "" && @user.password != "" && @user.save
         session[:user_id] = @user.id

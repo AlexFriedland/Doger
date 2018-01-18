@@ -14,6 +14,13 @@
       <label>Name</label>
       <input type="text" id="dog_name" name="dog[name]" value="<%= @dog.name%>"><br></br>
       </br>
+      <br>
+
+      <% Walk.all.each do |walk| %>
+        <input type="checkbox" id="walk_<%=walk.id%>" name="dog[walk_ids][]" value="<%= walk.id %>"<%='checked' if @dog.walks.include?(walk) %>>
+        <label><%= walk.miles.to_f %> miles, on: <%= walk.day %>, FROM: <%= walk.from %>, TO: <%= walk.to %></label>
+        <br><br>
+      <% end %>
 
       <input type="submit" value="Edit Dog">
 
