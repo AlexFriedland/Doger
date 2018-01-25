@@ -42,29 +42,35 @@ class ApplicationController < Sinatra::Base
 
   get '/dogs/:id' do
     @dog = Dog.find_by_id(params[:id])
-    erb :'/dogs/show'
+    if @dog.user.id == session[:user_id]
+      erb :'/dogs/show'
+    else
+      redirect '/users/show'
+    end
   end
 
   #patch / post ?
   patch "/dogs/:id" do
     @dog = Dog.find_by_id(params[:id])
-    if complete_dog?
-      @dog.name = params[:dog][:name]
-      @dog.walk_ids.clear
-      binding.pry
-      @dog.walk_ids = params[:dog][:walk_ids]
-      @dog.save
 
-      if params[:walk][:distance] != "" && params[:walk][:from] != "" && params[:walk][:to] != ""
-        @walk = Walk.create(day: "#{Time.now}", from: params[:walk][:from], to: params[:walk][:to], miles: params[:walk][:distance])
-        @dog.walks << @walk
-        @walk.dogs << @dog
+    if @dog.user.id == session[:user_id]
+
+
+
+      if complete_dog?
+        @dog.name = params[:dog][:name]
+        @dog.walk_ids.clear
+        @dog.walk_ids = params[:dog][:walk_ids]
+        @dog.save
+
+        if params[:walk][:distance] != "" && params[:walk][:from] != "" && params[:walk][:to] != ""
+          @walk = Walk.create(day: "#{Time.now}", from: params[:walk][:from], to: params[:walk][:to], miles: params[:walk][:distance])
+          @dog.walks << @walk
+          @walk.dogs << @dog
+        end
       end
-
-      redirect to "/users/show"
-    else
-      redirect to "/users/show"
     end
+    redirect to "/users/show"
   end
 
   delete '/dogs/:id/delete' do
