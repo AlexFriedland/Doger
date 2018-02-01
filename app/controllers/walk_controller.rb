@@ -1,0 +1,5 @@
+class WalksController < ApplicationController
+
+  
+
+end

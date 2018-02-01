@@ -5,7 +5,7 @@ require "./app/models/dog"
 
 require 'pry'
 
-class UserController < ApplicationController
+class UsersController < ApplicationController
 
   get "/" do
     if logged_in?
@@ -38,6 +38,49 @@ class UserController < ApplicationController
     if logged_in?
       session.clear
       redirect to "/login"
+    end
+  end
+
+  post "/signup" do
+    if User.all.any? {|user| user.username == params["username"]}
+      redirect "/failure"
+    else
+      @user = User.new(email: params["email"], username: params["username"], password_digest: params["password"])
+      if @user.username != "" && @user.password != "" && @user.save
+        session[:user_id] = @user.id
+        redirect "/users/show"
+      else
+        redirect "/failure"
+      end
+    end
+  end
+
+  get "/show" do
+      @user = User.find_by_id(session[:user_id])
+      erb :"/users/show"
+  end
+
+  post "/login" do
+    @user = User.find_by(:username => params[:username])
+    if @user && @user.authenticate(params[:password])
+        session[:user_id] = @user.id
+        redirect "/show"
+    else
+        redirect "/failure"
+    end
+  end
+
+  helpers do
+    def logged_in?
+      !!session[:user_id]
+    end
+
+    def current_user
+      User.find(session[:user_id])
+    end
+
+    def complete_dog?
+      params["name"] != ""
     end
   end
 
