@@ -16,26 +16,6 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "password_security"
   end
 
-  get "/" do
-    if logged_in?
-      redirect to "/users/show"
-    end
-  	erb :index
-  end
-
-  get "/signup" do
-    if logged_in?
-      @user = User.find_by_id(params[:user_id])
-      redirect to "/users/show"
-    end
-    erb :'/users/create_user'
-  end
-
-  get "/users/show" do
-    @user = User.find_by_id(session[:user_id])
-    erb :'/users/show'
-  end
-
   get "/dogs/newdog" do
     erb :'/dogs/create_dog'
   end
@@ -54,8 +34,6 @@ class ApplicationController < Sinatra::Base
     @dog = Dog.find_by_id(params[:id])
 
     if @dog.user.id == session[:user_id]
-
-
 
       if complete_dog?
         @dog.name = params[:dog][:name]
@@ -78,21 +56,6 @@ class ApplicationController < Sinatra::Base
     @dog.destroy
     @user = User.find_by_id(session[:user_id])
     erb :'/users/show'
-  end
-
-
-  get "/login" do
-    if logged_in?
-      redirect to "/users/show"
-    end
-    erb :'/users/login'
-  end
-
-  get "/logout" do
-    if logged_in?
-      session.clear
-      redirect to "/login"
-    end
   end
 
   get "/walks/:id/edit" do
@@ -128,39 +91,6 @@ class ApplicationController < Sinatra::Base
       erb :'/walks/walks'
     else
       redirect to "/login"
-    end
-  end
-
-  get '/failure' do
-    erb :'/failure'
-  end
-
-  post "/signup" do
-    if User.all.any? {|user| user.username == params["username"]}
-      redirect "/failure"
-    else
-      @user = User.new(email: params["email"], username: params["username"], password_digest: params["password"])
-      if @user.username != "" && @user.password != "" && @user.save
-        session[:user_id] = @user.id
-        redirect "/users/show"
-      else
-        redirect "/failure"
-      end
-    end
-  end
-
-  get "/show" do
-      @user = User.find_by_id(session[:user_id])
-      erb :"/users/show"
-  end
-
-  post "/login" do
-    @user = User.find_by(:username => params[:username])
-    if @user && @user.authenticate(params[:password])
-        session[:user_id] = @user.id
-        redirect "/show"
-    else
-        redirect "/failure"
     end
   end
 
