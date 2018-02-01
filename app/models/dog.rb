@@ -1,6 +1,6 @@
 class Dog < ActiveRecord::Base
   belongs_to :user
-  belongs_to :walk
-  
-  has_many :walks
+
+  has_many :dog_walks
+  has_many :walks, through: :dog_walks
 end
