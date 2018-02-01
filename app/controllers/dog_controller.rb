@@ -39,7 +39,7 @@ class DogsController < ApplicationController
     @dog = Dog.find_by_id(params[:id])
     @dog.destroy
     @user = User.find_by_id(session[:user_id])
-    erb :'/users/show'
+    redirect to '/users/show'
   end
 
   get '/create_dog' do
