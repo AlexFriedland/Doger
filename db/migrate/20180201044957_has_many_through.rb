@@ -9,7 +9,7 @@ class HasManyThrough < ActiveRecord::Migration[5.1]
     remove_column :dogs, :walk_id
 
     #remove dog_id from walks, has through dog_walks
-    remove_dolumn :walks, :dog_id
+    remove_column :walks, :dog_id
   end
 end
 
