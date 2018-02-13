@@ -42,10 +42,12 @@ class UsersController < ApplicationController
   end
 
   post "/signup" do
-    if User.all.any? {|user| user.username == params["username"]}
+    if User.all.any? {|user| user.username == params["user"]["username"]}
       redirect "/failure"
     else
-      @user = User.new(email: params["email"], username: params["username"], password_digest: params["password"])
+
+    @user = User.new(params[:user])
+
       if @user.username != "" && @user.password != "" && @user.save
         session[:user_id] = @user.id
         redirect "/users/show"
@@ -79,8 +81,9 @@ class UsersController < ApplicationController
       User.find(session[:user_id])
     end
 
-    def complete_dog?
+    def complete_user?
       params["name"] != ""
+      params["password"] != ""
     end
   end
 

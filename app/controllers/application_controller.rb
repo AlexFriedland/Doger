@@ -1,9 +1,5 @@
 #walks belong to dogs
 
-require './config/environment'
-require "./app/models/user"
-require "./app/models/walk"
-require "./app/models/dog"
 
 require 'pry'
 
